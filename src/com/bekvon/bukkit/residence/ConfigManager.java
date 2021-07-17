@@ -989,6 +989,9 @@ public class ConfigManager {
 	    "Full list of possible time zones can be found at http://www.mkyong.com/java/java-display-list-of-timezone-with-gmt/");
 	TimeZone = c.get("Global.TimeZone", Calendar.getInstance().getTimeZone().getID());
 
+	Currency = c.get("Global.Currency", "工匠点数");
+	c.addComment("Global.Currency", "Set Currency for GemsEconomy");
+	    
 	c.addComment("Global.ResMoneyBack", "Enable / Disable money returning on residence removal.");
 	ResMoneyBack = c.get("Global.ResMoneyBack", false);
 
