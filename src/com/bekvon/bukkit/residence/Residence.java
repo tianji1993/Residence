@@ -42,6 +42,8 @@ import org.dynmap.DynmapAPI;
 import org.kingdoms.main.Kingdoms;
 import org.kingdoms.manager.game.GameManagement;
 
+import me.xanium.gemseconomy.GemsEconomy;
+
 import com.bekvon.bukkit.residence.Placeholders.Placeholder;
 import com.bekvon.bukkit.residence.Placeholders.PlaceholderAPIHook;
 import com.bekvon.bukkit.residence.allNms.v1_10Events;
@@ -66,6 +68,7 @@ import com.bekvon.bukkit.residence.economy.BlackHoleEconomy;
 import com.bekvon.bukkit.residence.economy.CMIEconomy;
 import com.bekvon.bukkit.residence.economy.EconomyInterface;
 import com.bekvon.bukkit.residence.economy.EssentialsEcoAdapter;
+import com.bekvon.bukkit.residence.economy.GemsEconomyAdapter;
 import com.bekvon.bukkit.residence.economy.IConomy6Adapter;
 import com.bekvon.bukkit.residence.economy.RealShopEconomy;
 import com.bekvon.bukkit.residence.economy.TransactionManager;
@@ -553,6 +556,9 @@ public class Residence extends JavaPlugin {
 		switch (this.getConfigManager().getEconomyType()) {
 		case CMIEconomy:
 		    this.loadCMIEconomy();
+		    break;
+		case GemsEconomy:
+		    this.loadGemsEconomy();
 		    break;
 		case Essentials:
 		    this.loadEssentialsEconomy();
@@ -1160,7 +1166,17 @@ public class Residence extends JavaPlugin {
 	    consoleMessage("iConomy NOT found!");
 	}
     }
-
+	
+    private void loadGemsEconomy() {
+	Plugin p = getServer().getPluginManager().getPlugin("GemsEconomy");
+	if (p != null) {
+	    economy = new GemsEconomyAdapter((GemsEconomy) p, this.getConfig().getString("Global.Currency"));
+	    consoleMessage("Successfully linked with &5GemsEconomy");
+	} else {
+	    consoleMessage("GemsEconomy NOT found!");
+	}
+    }
+	
     private void loadEssentialsEconomy() {
 	Plugin p = getServer().getPluginManager().getPlugin("Essentials");
 	if (p != null) {
